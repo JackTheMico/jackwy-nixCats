@@ -1,0 +1,56 @@
+{
+  "nodes": {
+    "nixCats": {
+      "locked": {
+        "lastModified": 1738561344,
+        "narHash": "sha256-gPdnByr60DgCHMiez/YYnYCrjRIQqwCLwjQDLZahoBU=",
+        "owner": "BirdeeHub",
+        "repo": "nixCats-nvim",
+        "rev": "bd3934a579ef4182ddadd007281ab264137fff78",
+        "type": "github"
+      },
+      "original": {
+        "owner": "BirdeeHub",
+        "repo": "nixCats-nvim",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 0,
+        "narHash": "sha256-B/7Y1v4y+msFFBW1JAdFjNvVthvNdJKiN6EGRPnqfno=",
+        "path": "/nix/store/y43mj3x0256cm2siypjb3jpk96g0sx9p-source",
+        "type": "path"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "type": "indirect"
+      }
+    },
+    "plugins-houdini": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1720213920,
+        "narHash": "sha256-diXdGip0lb7axIOWhXPn0A618g4Ijr4NMyprS8Ed1xY=",
+        "owner": "TheBlob42",
+        "repo": "houdini.nvim",
+        "rev": "1b7ec0a713a2aa9965848d8b93f66dc93716fd1c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "TheBlob42",
+        "repo": "houdini.nvim",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "nixCats": "nixCats",
+        "nixpkgs": "nixpkgs",
+        "plugins-houdini": "plugins-houdini"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
