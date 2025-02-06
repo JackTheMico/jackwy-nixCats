@@ -1,10 +1,11 @@
 require("snacks.bigfile").setup()
+
 require("nixCatsUtils").setup {
   non_nix_value = true;
 }
 
-local Snacks = require("snacks").setup()
 local lze = require("lze")
+
 lze.load {
   "snacks.nvim",
   keys = {
