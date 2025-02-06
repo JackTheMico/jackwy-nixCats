@@ -3,4 +3,16 @@ require("nixCatsUtils").setup {
 }
 
 require("snacks.quickfile").setup()
-require("lze").load("plugins")
+local lze = require("lze")
+lze.load {
+  "snacks.nvim",
+  keys = {
+    { '<c-\\>', function() Snacks.terminal() end, mode = { 'n' }, desc = 'open snacks terminal' },
+  },
+  after = function(_)
+    require('snacks').setup({
+      terminal = { enabled = true, },
+    })
+  end,
+}
+lze.load("plugins")
