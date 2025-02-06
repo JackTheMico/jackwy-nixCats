@@ -8,6 +8,7 @@ local lze = require("lze")
 
 lze.load {
   "snacks.nvim",
+  event = "DeferredUIEnter",
   keys = {
     { '<c-\\>', function() Snacks.terminal() end, mode = { 'n' }, desc = 'open snacks terminal' },
   },
