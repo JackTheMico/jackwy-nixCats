@@ -140,7 +140,8 @@
       # use with packadd and an autocommand in config to achieve lazy loading
       optionalPlugins = {
         general = with pkgs.vimPlugins; [
-	  pkgs.neovimPlugins.houdini
+          pkgs.neovimPlugins.houdini
+          which-key-nvim
           blink-cmp
           luasnip
           friendly-snippets

@@ -1,13 +1,12 @@
 return {
-  "fzf-lua",
+  "which-key.nvim",
   event = "DeferredUIEnter",
   load = function (name)
       vim.cmd.packadd(name)
-      vim.cmd.packadd("fzf-lua")
+      vim.cmd.packadd("which-key")
   end,
-
   after = function ()
-    require("fzf-lua").setup({})
+    require("which-key").setup({})
   end
 }
 
