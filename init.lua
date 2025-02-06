@@ -2,7 +2,7 @@ require("nixCatsUtils").setup {
   non_nix_value = true;
 }
 
-require("snacks.quickfile").setup()
+local Snacks = require("snacks").setup()
 local lze = require("lze")
 lze.load {
   "snacks.nvim",
