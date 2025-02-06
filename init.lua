@@ -1,3 +1,4 @@
+require("snacks.bigfile").setup()
 require("nixCatsUtils").setup {
   non_nix_value = true;
 }
