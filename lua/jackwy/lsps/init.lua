@@ -1,3 +1,4 @@
+-- TODO: Make this work for me
 local catUtils = require('nixCatsUtils')
 local servers = {}
 if nixCats('neonixdev') then

@@ -130,30 +130,45 @@
       # This is for plugins that will load at startup without using packadd:
       startupPlugins = {
         general = with pkgs.vimPlugins; [ 
+          bufferline-nvim
           lze
           snacks-nvim
-          lualine-nvim
-          bufferline-nvim
+	  nvim-notify
+	  nvim-web-devicons
+	  nvim-nio
+	  plenary-nvim
+	  mini-nvim
         ];
       };
 
       # not loaded automatically at startup.
       # use with packadd and an autocommand in config to achieve lazy loading
-      optionalPlugins = {
-        general = with pkgs.vimPlugins; [
-          pkgs.neovimPlugins.houdini
+      optionalPlugins = with pkgs.vimPlugins; {
+        general = {
+	  cmp = [
+            blink-cmp
+	  ];
+	  core = [
+            pkgs.neovimPlugins.houdini
+            luasnip
+            friendly-snippets
+            fzf-lua
+            lualine-nvim
+            lualine-lsp-progress
+            nvim-lspconfig
+            vim-commentary
+            yazi-nvim
+            overseer-nvim
+            undotree
+            gitsigns-nvim
+            vim-sleuth
+          ];
+        };
+        other = [
+          todo-comments-nvim
           which-key-nvim
-          blink-cmp
-          luasnip
-          friendly-snippets
-          fzf-lua
-          vim-commentary
-          yazi-nvim
-          overseer-nvim
-          undotree
-          gitsigns-nvim
         ];
-        treesitter = with pkgs.vimPlugins; [
+        treesitter = [
           nvim-treesitter-textobjects
           nvim-treesitter-context
           (nvim-treesitter.withPlugins (
@@ -167,7 +182,7 @@
             ]
           ))
         ];
-        debug = with pkgs.vimPlugins; {
+        debug = {
           default = [
             nvim-dap
             nvim-dap-ui
@@ -175,17 +190,17 @@
           ];
           python = [ nvim-dap-python ];
         };
-        lint = with pkgs.vimPlugins; [
+        lint = [
           nvim-lint
         ];
-        format = with pkgs.vimPlugins; [
+        format = [
           conform-nvim
         ];
-        markdown = with pkgs.vimPlugins; [
+        markdown = [
           markdown-preview-nvim
           render-markdown-nvim
         ];
-        neonixdev = with pkgs.vimPlugins; [
+        neonixdev = [
           lazydev-nvim
         ];
 
@@ -260,9 +275,13 @@
         # and a set of categories that you want
         # (and other information to pass to lua)
         categories = {
+          debug = true;
           general = true;
+	  other = true;
 	  treesitter = true;
           test = true;
+	  lint = true;
+	  format = true;
           example = {
             youCan = "add more than just booleans";
             toThisSet = [
