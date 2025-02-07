@@ -110,20 +110,21 @@
           nixd # nix lsp
           nix-doc
           alejandra # formatter
+	  lua-language-server
         ];
         python = with pkgs; [
           basedpyright # python lsp
+	  ruff
+	  isort
         ];
+	lua = with pkgs; [
+	  stylua
+	  lua-language-server
+	];
         astro = with pkgs; [
           astro-language-server # astro lsp
+	  # TODO: formatter and lint
         ];
-        neonixdev = {
-          # also you can do this.
-          inherit (pkgs) nix-doc lua-language-server nixd;
-          # and each will be its own sub category
-        };
-
-
       };
 
       # This is for plugins that will load at startup without using packadd:
@@ -174,18 +175,9 @@
           ];
           python = [ nvim-dap-python ];
         };
-        lint = with pkgs; {
-          default = [
-            vimPlugins.nvim-lint
-          ];
-          python = [
-            ruff 
-            isort
-          ];
-          lua =  [
-            luajitPackages.luacheck
-          ];
-        };
+        lint = with pkgs.vimPlugins; [
+          nvim-lint
+        ];
         format = with pkgs.vimPlugins; [
           conform-nvim
         ];
@@ -233,7 +225,10 @@
       # vim.g.python3_host_prog
       # or run from nvim terminal via :!<packagename>-python3
       extraPython3Packages = {
-        test = (_:[]);
+        python = (py:[
+	  py.debugpy
+	  py.pytest
+	]);
       };
       # populates $LUA_PATH and $LUA_CPATH
       extraLuaPackages = {
