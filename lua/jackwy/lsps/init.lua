@@ -30,28 +30,28 @@ if nixCats('neonixdev') then
   if catUtils.isNixCats then
     servers.nixd = {
       nixd = {
-        nixpkgs = {
-          expr = [[import (builtins.getFlake "]] .. nixCats.extra("nixdExtras.nixpkgs") .. [[") { }   ]],
-        },
+        -- nixpkgs = {
+        --   expr = [[import (builtins.getFlake "]] .. nixCats.extra("nixdExtras.nixpkgs") .. [[") { }   ]],
+        -- },
         formatting = {
           command = { "nixfmt" }
         },
-        options = {
-          -- (builtins.getFlake "<path_to_system_flake>").legacyPackages.<system>.nixosConfigurations."<user@host>".options
-          nixos = {
-            expr = [[(builtins.getFlake "]] ..
-              nixCats.extra("nixdExtras.flake-path") .. [[").legacyPackages.]] ..
-              nixCats.extra("nixdExtras.system") .. [[.nixosConfigurations."]] ..
-              nixCats.extra("nixdExtras.systemCFGname") .. [[".options]]
-          },
-          -- (builtins.getFlake "<path_to_system_flake>").legacyPackages.<system>.homeConfigurations."<user@host>".options
-          ["home-manager"] = {
-            expr = [[(builtins.getFlake "]] ..
-              nixCats.extra("nixdExtras.flake-path") .. [[").legacyPackages.]] ..
-              nixCats.extra("nixdExtras.system") .. [[.homeConfigurations."]] ..
-              nixCats.extra("nixdExtras.homeCFGname") .. [[".options]]
-          }
-        },
+        -- options = {
+        --   -- (builtins.getFlake "<path_to_system_flake>").legacyPackages.<system>.nixosConfigurations."<user@host>".options
+        --   nixos = {
+        --     expr = [[(builtins.getFlake "]] ..
+        --       nixCats.extra("nixdExtras.flake-path") .. [[").legacyPackages.]] ..
+        --       nixCats.extra("nixdExtras.system") .. [[.nixosConfigurations."]] ..
+        --       nixCats.extra("nixdExtras.systemCFGname") .. [[".options]]
+        --   },
+        --   -- (builtins.getFlake "<path_to_system_flake>").legacyPackages.<system>.homeConfigurations."<user@host>".options
+        --   ["home-manager"] = {
+        --     expr = [[(builtins.getFlake "]] ..
+        --       nixCats.extra("nixdExtras.flake-path") .. [[").legacyPackages.]] ..
+        --       nixCats.extra("nixdExtras.system") .. [[.homeConfigurations."]] ..
+        --       nixCats.extra("nixdExtras.homeCFGname") .. [[".options]]
+        --   }
+        -- },
         diagnostic = {
           suppress = {
             "sema-escaping-with"
@@ -60,7 +60,7 @@ if nixCats('neonixdev') then
       }
     }
     vim.api.nvim_create_user_command("StartNilLSP", function()
-      require('lspconfig').nil_ls.setup({ capabilities = require('birdee.LSPs').get_capabilities('nil_ls') })
+      require('lspconfig').nil_ls.setup({ capabilities = require("jackwy.lsps").get_capabilities('nil_ls') })
     end, { desc = 'Run nil-ls (when you really need docs for the builtins and nixd refuse)' })
   else
     servers.rnix = {}
@@ -82,67 +82,48 @@ elseif nixCats('lua') then
     filetypes = { 'lua' },
   }
 end
-if nixCats('elixir') then
-  servers.elixirls = {
-    cmd = { "elixir-ls" },
-  }
-end
-if nixCats('kotlin') then
-  servers.kotlin_language_server = {
-    kotlin = {
-      formatters = {
-        ignoreComments = true,
-      },
-      signatureHelp = { enabled = true },
-      workspace = { checkThirdParty = true },
-      telemetry = { enabled = false },
-    },
-    -- filetypes = { 'kotlin' },
-    -- root_pattern = {"settings.gradle", "settings.gradle.kts", 'gradlew', 'mvnw'},
-  }
-end
-if nixCats('java') then
-  servers.jdtls = {
-    -- filetypes = { 'java', 'kotlin' },
-  }
-end
-if nixCats('java') or nixCats('kotlin') then
-  servers.gradle_ls = {
-    root_pattern = { "settings.gradle", "settings.gradle.kts", 'gradlew', 'mvnw' },
-    cmd = { nixCats.extra("javaExtras.gradle-ls") .. "/share/vscode/extensions/vscjava.vscode-gradle/lib/gradle-server" },
-    filetypes = { "kotlin", "java" },
-  }
-end
+-- if nixCats('elixir') then
+--   servers.elixirls = {
+--     cmd = { "elixir-ls" },
+--   }
+-- end
+-- if nixCats('kotlin') then
+--   servers.kotlin_language_server = {
+--     kotlin = {
+--       formatters = {
+--         ignoreComments = true,
+--       },
+--       signatureHelp = { enabled = true },
+--       workspace = { checkThirdParty = true },
+--       telemetry = { enabled = false },
+--     },
+--     -- filetypes = { 'kotlin' },
+--     -- root_pattern = {"settings.gradle", "settings.gradle.kts", 'gradlew', 'mvnw'},
+--   }
+-- end
+-- if nixCats('java') then
+--   servers.jdtls = {
+--     -- filetypes = { 'java', 'kotlin' },
+--   }
+-- end
+-- if nixCats('java') or nixCats('kotlin') then
+--   servers.gradle_ls = {
+--     root_pattern = { "settings.gradle", "settings.gradle.kts", 'gradlew', 'mvnw' },
+--     cmd = { nixCats.extra("javaExtras.gradle-ls") .. "/share/vscode/extensions/vscjava.vscode-gradle/lib/gradle-server" },
+--     filetypes = { "kotlin", "java" },
+--   }
+-- end
 if nixCats('bash') then
   servers.bashls = {}
 end
-if nixCats('go') then
-  servers.gopls = {
-    -- filetypes = { "go", "gomod", "gowork", "gotmpl", "templ", "tmpl", },
-  }
-end
+-- if nixCats('go') then
+--   servers.gopls = {
+--     -- filetypes = { "go", "gomod", "gowork", "gotmpl", "templ", "tmpl", },
+--   }
+-- end
 if nixCats('python') then
   -- servers.pyright = {},
-  servers.pylsp = {
-    pylsp = {
-      plugins = {
-        -- formatter options
-        black = { enabled = false },
-        autopep8 = { enabled = false },
-        yapf = { enabled = false },
-        -- linter options
-        pylint = { enabled = true, executable = "pylint" },
-        pyflakes = { enabled = false },
-        pycodestyle = { enabled = false },
-        -- type checker
-        pylsp_mypy = { enabled = true },
-        -- auto-completion options
-        jedi_completion = { fuzzy = true },
-        -- import sorting
-        pyls_isort = { enabled = true },
-      },
-    },
-  }
+  servers.basedpyright = {}
 end
 
 if nixCats('general.markdown') then
@@ -153,57 +134,46 @@ if nixCats('general.markdown') then
   }
 end
 
-if nixCats('web.templ') then
-  servers.templ = {}
-end
-if nixCats('web.tailwindcss') then
-  servers.tailwindcss = {}
-end
-if nixCats('web.JS') then
-  servers.ts_ls = {
-    filetypes = {
-      "javascript",
-      "javascriptreact",
-      "javascript.jsx",
-      "typescript",
-      "typescriptreact",
-      "typescript.tsx",
-    },
-  }
-end
-if nixCats('web.HTMX') then
-  servers.htmx = {}
-end
-if nixCats('web.HTML') then
-  servers.cssls = {}
-  servers.eslint = {}
-  servers.jsonls = {}
-  servers.html = {
-    filetypes = { 'html', 'twig', 'hbs', 'templ' },
-    html = {
-      format = {
-        templating = true,
-        wrapLineLength = 120,
-        wrapAttributes = 'auto',
-      },
-      hover = {
-        documentation = true,
-        references = true,
-      },
-    },
-  }
-end
-if nixCats('C') then
-  servers.clangd = {
-    -- unneded thanks to clangd_extensions-nvim I think
-    -- clangd_config = {
-    --   init_options = {
-    --     compilationDatabasePath="./build",
-    --   },
-    -- }
-  }
-  servers.cmake = {}
-end
+-- if nixCats('web.templ') then
+--   servers.templ = {}
+-- end
+-- if nixCats('web.tailwindcss') then
+--   servers.tailwindcss = {}
+-- end
+-- if nixCats('web.JS') then
+--   servers.ts_ls = {
+--     filetypes = {
+--       "javascript",
+--       "javascriptreact",
+--       "javascript.jsx",
+--       "typescript",
+--       "typescriptreact",
+--       "typescript.tsx",
+--     },
+--   }
+-- end
+-- if nixCats('web.HTMX') then
+--   servers.htmx = {}
+-- end
+-- if nixCats('web.HTML') then
+--   servers.cssls = {}
+--   servers.eslint = {}
+--   servers.jsonls = {}
+--   servers.html = {
+--     filetypes = { 'html', 'twig', 'hbs', 'templ' },
+--     html = {
+--       format = {
+--         templating = true,
+--         wrapLineLength = 120,
+--         wrapAttributes = 'auto',
+--       },
+--       hover = {
+--         documentation = true,
+--         references = true,
+--       },
+--     },
+--   }
+-- end
 
 if nixCats('rust') then
   -- NOTE: rustaceanvim takes care of: `servers.rust_analyzer = {}`
@@ -313,7 +283,7 @@ require('lze').load {
     event = "FileType",
     dep_of = { "otter.nvim", },
     load = (catUtils.isNixCats and nil) or function(name)
-      require("birdee.utils").safe_packadd({ name, "mason.nvim", "mason-lspconfig.nvim" })
+      require("jackwy.utils").multi_packadd({ name, "mason.nvim", "mason-lspconfig.nvim" })
     end,
     after = function(plugin)
       if catUtils.isNixCats then
